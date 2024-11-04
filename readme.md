@@ -1,4 +1,6 @@
-<center>![Repo Studio](https://i.ibb.co/bBqzZrJ/download.png "Repo Studio")</center>
+<p align="center">
+  <img src="https://i.ibb.co/bBqzZrJ/download.png" alt="Repo Studio" title="Repo Studio">
+</p>
 
 **Repo Studio** is a powerful HTML studio that provides real-time HTML previews and saves your work using only your GitHub repositories.
 
