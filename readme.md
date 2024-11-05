@@ -39,6 +39,5 @@ Repo Studio is an alternative to many compilers or studios designed to show your
 
 *Access these extensions by typing `addon.add`, `addon.list`, or `addon.github` in the [studio console](http://repostudio.vercel.app/console "studio console").*
 
-<h1 align="center">Who created Repo Studio?</h1>
-<h3 align="center">Wanets & Martin Uzunuv</h3>
-[![Creators](https://i.ibb.co/vkVkyMf/image.png "Creators")](https://github.com/MartinUzunuv "Creators")
+
+<img src="https://i.ibb.co/vkVkyMf/image.png" alt="Repo Studio" title="Repo Studio">
