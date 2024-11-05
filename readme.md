@@ -27,9 +27,6 @@
 &#42;To explore more commands or edit your account data, type `help` in the studio console to view all available commands.
 
 <p align="center">⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅
-
-[========]
-
 <p align="center">⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆
 
 <h1 align="center">Why was Repo Studio created?</h1>
@@ -38,6 +35,8 @@
 Repo Studio is an alternative to many compilers or studios designed to show your code in real-time and save it to your profile. Unfortunately, some other platforms may not save your data or may require payment for extra features, memory, or support for additional code types. Repo Studio is completely free and allows for community-driven extensions on GitHub using the Repo Studio API. 
 
 *Access these extensions by typing `addon.add`, `addon.list`, or `addon.github` in the [studio console](http://repostudio.vercel.app/console "studio console").*
-
-
+<p align="center">⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅⨅
+<p align="center">⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆⨆
+<h1 align="center">Who created Repo Studio?</h1>
+<h3 align="center">Wanets & Martin Uzunuv</h3>
 <img src="https://i.ibb.co/vkVkyMf/image.png" alt="Repo Studio" title="Repo Studio">
