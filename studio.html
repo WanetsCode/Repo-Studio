@@ -1,143 +1,121 @@
-<body id="itmn">
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Repo Studio
-  </title>
-  <div class="editor-container">
-    <!-- Top Toolbar -->
-    <div class="toolbar" id="ixqj4">
-      <div class="toolbar-item" id="i7ty4">
-        <br/>
-      </div>
-      <div id="i6dx5">
-        <span id="ifvj5"><u>web:repostudio
-          </u></span>/user-folder/main.py
-      </div>
-      <div id="ih18c">
-        <b>(Saved in WanetsCode/mypythoncode/main.py)
-        </b>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repo Studio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #repoContainer {
+            display: none;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        #statusMessage {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@octokit/rest"></script>
+</head>
+<body>
+    <h1>Welcome to Repo Studio</h1>
+    <button id="loginButton">Load Repos</button>
+    <div id="repoContainer">
+        <h2>Select a Repository</h2>
+        <select id="repoList"></select>
+        <h2>Edit File</h2>
+        <textarea id="editor"></textarea>
+        <button id="saveButton">Save Changes</button>
+        <p id="statusMessage"></p>
     </div>
-    <!-- Main Content Area -->
-    <div class="main-content" id="ishrk">
-      <!-- Sidebar -->
-      <div class="sidebar" id="igfgj">
-        <div class="sidebar-item" id="iughu">Extensions
-        </div>
-        <div class="sidebar-item" id="io5uo">Import Libraries
-        </div>
-        <div class="sidebar-item" id="ihm3o">Preview Settings
-        </div>
-        <div class="sidebar-item" id="iriwc">Settings
-        </div>
-        <div class="sidebar-item" id="ittlz">Toolbox
-        </div>
-      </div>
-      <!-- Editor and Console Area -->
-      <div class="code-editor" id="iuq6j">
-        <code id="iqhbo">import turtle as pen
-          print("Hello World")
-          pen.circle(100)
-        </code>
-      </div>
-      <div class="console-area" id="iy80a">Hello World
-        <br/>
-        <br/>
-        <br/>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBgbV09LiVxYl2Fdnej5jeiFvEY5RIBKoZQ4aKMpvwFCJsxa8iTm9v8TWcYyprCTT0pEg&usqp=CAU" alt="circle - Wiktionary, the free dictionary"/>
-        <br/>
-        <br/>
-      </div>
-    </div>
-    <!-- Bottom Status Bar -->
-    <div class="status-bar" id="icouo">Made with ❤ by Wanets &amp; Martin Uzunov
-    </div>
-  </div>
+
+    <script>
+        const octokit = new Octokit({
+            auth: process.env.GITHUB_APP_TOKEN  // Replace with your GitHub token variable
+        });
+
+        document.getElementById("loginButton").addEventListener("click", async () => {
+            loadRepos();
+        });
+
+        async function loadRepos() {
+            try {
+                const response = await octokit.request('GET /installation/repositories', {
+                    headers: {
+                        accept: 'application/vnd.github+json'
+                    }
+                });
+
+                const repoList = document.getElementById("repoList");
+                response.data.repositories.forEach((repo) => {
+                    const option = document.createElement("option");
+                    option.value = repo.full_name;
+                    option.textContent = repo.full_name;
+                    repoList.appendChild(option);
+                });
+
+                document.getElementById("repoContainer").style.display = "block";
+            } catch (error) {
+                console.error("Error loading repositories:", error);
+            }
+        }
+
+        document.getElementById("repoList").addEventListener("change", async (event) => {
+            const [owner, repo] = event.target.value.split('/');
+            const fileContent = await loadFile(owner, repo);
+            document.getElementById("editor").value = atob(fileContent);
+        });
+
+        async function loadFile(owner, repo) {
+            try {
+                const { data } = await octokit.rest.repos.getContent({
+                    owner: owner,
+                    repo: repo,
+                    path: "README.md"
+                });
+                return data.content;
+            } catch (error) {
+                console.error("Error loading file:", error);
+            }
+        }
+
+        document.getElementById("saveButton").addEventListener("click", async () => {
+            const [owner, repo] = document.getElementById("repoList").value.split('/');
+            const content = btoa(document.getElementById("editor").value);
+
+            try {
+                const { data } = await octokit.rest.repos.getContent({
+                    owner: owner,
+                    repo: repo,
+                    path: "README.md"
+                });
+
+                await octokit.rest.repos.createOrUpdateFileContents({
+                    owner: owner,
+                    repo: repo,
+                    path: "README.md",
+                    message: "Update README from Repo Studio",
+                    content: content,
+                    sha: data.sha
+                });
+
+                document.getElementById("statusMessage").textContent = "File updated successfully!";
+            } catch (error) {
+                console.error("Error saving file:", error);
+            }
+        });
+    </script>
 </body>
-<style>* {
-  box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-  }
-  .editor-container{
-    display:flex;
-    flex-direction:column;
-    height:100vh;
-    color:#333;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
-  .toolbar{
-    display:flex;
-    background-color:#1e1e1e;
-    color:#d4d4d4;
-    padding:10px;
-  }
-  .toolbar-item{
-    margin-right:15px;
-    cursor:pointer;
-    color:#c5c5c5;
-  }
-  .toolbar-item:hover{
-    color:#ffffff;
-  }
-  .main-content{
-    display:flex;
-    flex:1;
-    overflow:hidden;
-  }
-  .sidebar{
-    width:15%;
-    background-color:#2d2d2d;
-    color:#d4d4d4;
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-  }
-  .sidebar-item{
-    cursor:pointer;
-    font-size:0.9rem;
-    color:#c5c5c5;
-    font-weight:600;
-  }
-  .code-editor{
-    flex:1;
-    background-color:#1e1e1e;
-    padding:20px;
-    font-family:"Fira Code", monospace;
-    font-size:1rem;
-    line-height:1.5;
-    color:#dcdcaa;
-    border:1px solid #3a3d41;
-    margin-bottom:10px;
-    white-space:pre-wrap;
-    border-radius:4px;
-  }
-  .console-area{
-    flex:1;
-    background-color:#2d2d2d;
-    padding:10px;
-    color:#d4d4d4;
-    font-family:monospace;
-    font-size:0.9rem;
-    border-top:1px solid #3a3d41;
-  }
-  .status-bar{
-    background-color:#007acc;
-    color:white;
-    padding:10px;
-    text-align:center;
-    font-size:0.85rem;
-    font-family:monospace;
-  }
-  #iuq6j{
-    display:inline;
-  }
-  #i6dx5{
-    padding:10px;
-  }
-  #ih18c{
-    padding:10px;
-  }
-</style>
+</html>
